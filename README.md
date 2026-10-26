@@ -7,10 +7,12 @@ Cosmos Explorer ist eine interaktive 3D-Weltraum-Website. Du kannst durch ein an
 - Echtes 3D-Sonnensystem mit Three.js
 - Frei drehbare Kamera und Zoom
 - Acht klickbare Planeten mit Detail-Panel
-- Prozedural erzeugte Planeten-Oberflächen
-- Asteroidengürtel mit 1.400 animierten Asteroiden
+- Deutlich verbesserte, prozedurale Planeten-Texturen
+- Erdmond, der separat um die Erde kreist
+- Zwei bewegliche Raumsonden: Voyager 1 und Voyager 2
+- Asteroidengürtel mit 1.600 animierten Asteroiden
 - Verbesserte Sonne mit Glow- und Halo-Effekt
-- Sternenhimmel mit farbigen Sternen
+- Sternenhimmel mit 12.000 farbigen Sternen
 - Orbit-Linien, rotierende Planeten und Saturnringe
 - Schnellnavigation zu Sonne, Erde, Mars, Jupiter und Saturn
 - Responsives Interface für Desktop und Mobile
@@ -37,8 +39,8 @@ Danach öffne die angezeigte Adresse im Browser.
 
 ## Roadmap
 
-- [ ] Texturierte Planeten mit NASA-Bildern
-- [ ] Raumsonden und Missionsrouten
+- [ ] Echte NASA-Texturen für alle Planeten
+- [ ] Weitere Monde und Raumsonden
 - [ ] Weltraum-Quiz und Entdeckungs-Abzeichen
 - [ ] Nutzerkonten und Favoriten
 - [ ] Exoplaneten-Modus
