@@ -33,7 +33,8 @@ Danach öffne die angezeigte Adresse im Browser. Die Website läuft auch direkt 
 
 ## Credits
 
-- Planetentexturen: James Hastings-Trew (Planet Pixel Emporium) via [threex.planets](https://github.com/jeromeetienne/threex.planets) (MIT-Lizenz)
+- Planetentexturen: [Solar System Scope](https://www.solarsystemscope.com/textures/) (CC BY 4.0), basierend auf NASA-Daten
+- Fakten und Daten: [NASA Science](https://science.nasa.gov/)
 - Three.js wird über CDN (unpkg) geladen
 
 ## Roadmap

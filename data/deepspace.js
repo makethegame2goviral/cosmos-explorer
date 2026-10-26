@@ -3,6 +3,7 @@ export const SUN = {
   name: "Sonne",
   type: "Stern (Gelber Zwerg)",
   color: 0xffc65c,
+  source: "https://science.nasa.gov/sun/",
   stats: [
     { value: "1.392.700 km", label: "Durchmesser" },
     { value: "5.500 °C", label: "Oberfläche" },
@@ -26,6 +27,7 @@ export const DEEPSPACE = [
     type: "Balken-Spiralgalaxie",
     color: 0x9fc4ff,
     viewDistance: 160,
+    source: "https://science.nasa.gov/universe/galaxies/",
     stats: [
       { value: "100.000 Lichtjahre", label: "Durchmesser" },
       { value: "100–400 Mrd.", label: "Sterne" },
@@ -37,7 +39,7 @@ export const DEEPSPACE = [
     facts: [
       "Bei dunklem Himmel sieht man die Milchstraße als milchiges Band.",
       "Unsere Sonne benötigt rund 230 Millionen Jahre für einen Umlauf um das Galaktische Zentrum.",
-      "Die Milchstraße verschmilzt in ca. 4,5 Milliarden Jahren mit der Andromeda-Galaxie.",
+      "Die Milchstraße wird sich vermutlich in einigen Milliarden Jahren mit der Andromeda-Galaxie vereinen.",
       "Alles, was man mit bloßem Auge sieht, gehört zur Milchstraße – bis auf wenige Ausnahmen."
     ]
   },
@@ -47,6 +49,7 @@ export const DEEPSPACE = [
     type: "Spiralgalaxie (M31)",
     color: 0xffd9b0,
     viewDistance: 150,
+    source: "https://science.nasa.gov/universe/galaxies/andromeda-galaxy/",
     stats: [
       { value: "220.000 Lichtjahre", label: "Durchmesser" },
       { value: "2,5 Mio. Lichtjahre", label: "Entfernung" },
@@ -68,14 +71,15 @@ export const DEEPSPACE = [
     type: "Supermassereiches Schwarzes Loch",
     color: 0xffa040,
     viewDistance: 60,
+    source: "https://science.nasa.gov/universe/black-holes/",
     stats: [
       { value: "4,3 Mio. Sonnenmassen", label: "Masse" },
       { value: "26.000 Lichtjahre", label: "Entfernung zur Erde" },
-      { value: "Mitten in der Milchstraße", label: "Position" },
+      { value: "Zentrum der Milchstraße", label: "Position" },
       { value: "2022", label: "Erstes Foto (Event Horizon Telescope)" }
     ],
     description:
-      "Sagittarius A* ist das supermassereiche Schwarze Loch im Zentrum der Milchstraße. Seine Anziehungskraft hält die ganze Galaxie zusammen. Nichts, was einmal hineinfällt, kann wieder entkommen – nicht einmal Licht.",
+      "Sagittarius A* ist das supermassereiche Schwarze Loch im Zentrum der Milchstraße. Nichts, was einmal hineinfällt, kann wieder entkommen – nicht einmal Licht. Die Galaxie wird übrigens vor allem durch ihre Gesamtmasse zusammengehalten, nicht allein durch das Schwarze Loch.",
     facts: [
       "Schwarze Löcher sind keine Löcher, sondern extrem verdichtete Materie.",
       "Der leuchtende Ring entsteht durch Gas, das sich mit riesiger Geschwindigkeit umkreist.",
@@ -89,6 +93,7 @@ export const DEEPSPACE = [
     type: "Sternentstehungsregion",
     color: 0xff6ec7,
     viewDistance: 60,
+    source: "https://science.nasa.gov/solar-system/orion-nebula/",
     stats: [
       { value: "1.344 Lichtjahre", label: "Entfernung" },
       { value: "24 Lichtjahre", label: "Ausdehnung" },
@@ -110,6 +115,7 @@ export const DEEPSPACE = [
     type: "Komet",
     color: 0xaef2ff,
     viewDistance: 14,
+    source: "https://science.nasa.gov/solar-system/comets/1p-halley/",
     stats: [
       { value: "76 Jahre", label: "Umlaufzeit" },
       { value: "11 km", label: "Kern-Durchmesser" },

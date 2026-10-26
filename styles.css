@@ -250,6 +250,15 @@ h3 {
   line-height: 1.7;
 }
 
+#planetFacts .source-link {
+  margin-top: 6px;
+  list-style: none;
+}
+
+#planetFacts .source-link a {
+  color: var(--blue);
+}
+
 .quiz-overlay {
   position: fixed;
   inset: 0;

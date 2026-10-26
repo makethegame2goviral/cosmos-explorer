@@ -174,14 +174,14 @@ function textureStyle(planet) {
 }
 
 const PLANET_TEXTURES = {
-  mercury: "textures/mercurymap.jpg",
-  venus: "textures/venusmap.jpg",
-  earth: "textures/earthmap1k.jpg",
-  mars: "textures/marsmap1k.jpg",
-  jupiter: "textures/jupitermap.jpg",
-  saturn: "textures/saturnmap.jpg",
-  uranus: "textures/uranusmap.jpg",
-  neptune: "textures/neptunemap.jpg"
+  mercury: "textures/mercury.jpg",
+  venus: "textures/venus_atmosphere.jpg",
+  earth: "textures/earth_daymap.jpg",
+  mars: "textures/mars.jpg",
+  jupiter: "textures/jupiter.jpg",
+  saturn: "textures/saturn.jpg",
+  uranus: "textures/uranus.jpg",
+  neptune: "textures/neptune.jpg"
 };
 
 function applyTexture(mesh, url, baseColor, style) {
@@ -248,7 +248,7 @@ function createPlanets() {
           emissive: 0x222233
         })
       );
-      texLoader.load("textures/earthcloudmap.jpg", texture => {
+      texLoader.load("textures/earth_clouds.jpg", texture => {
         earthClouds.material.alphaMap = texture;
         earthClouds.material.needsUpdate = true;
       }, undefined, () => {});
@@ -285,6 +285,11 @@ function createPlanets() {
       );
       ring.rotation.x = Math.PI / 2.2;
       mesh.add(ring);
+      texLoader.load("textures/saturn_ring.png", texture => {
+        texture.colorSpace = THREE.SRGBColorSpace;
+        ring.material.map = texture;
+        ring.material.needsUpdate = true;
+      }, undefined, () => {});
     }
   });
 }
@@ -306,7 +311,7 @@ function createMoon(parent, color, distance, size, speed, tilt = 0, textureUrl =
 }
 
 function createMoons() {
-  createMoon(earthMesh, 0xc9c5bd, 2.1, 0.24, 0.55, 0, "textures/moonmap1k.jpg");
+  createMoon(earthMesh, 0xc9c5bd, 2.1, 0.24, 0.55, 0, "textures/moon.jpg");
 
   const mars = planetObjects.find(p => p.data.id === "mars").mesh;
   createMoon(mars, 0x9a8a7d, 1.5, 0.09, 1.1, 0.15);
@@ -400,7 +405,7 @@ const sun = new THREE.Mesh(
 sun.userData = SUN;
 scene.add(sun);
 clickables.push(sun);
-texLoader.load("textures/sunmap.jpg", texture => {
+texLoader.load("textures/sun.jpg", texture => {
   texture.colorSpace = THREE.SRGBColorSpace;
   sun.material.map = texture;
   sun.material.needsUpdate = true;
@@ -542,7 +547,7 @@ function createGalaxy(data, position, size, coreColor, armColor) {
   sprite.scale.set(size * 2.7, size * 2.7, 1);
   group.add(sprite);
 
-  registerDeepObject(data, group, size * 0.75, size * 0.62);
+  registerDeepObject(data, group, size * 1.2, size * 0.62);
   return { sprite, group };
 }
 
@@ -638,7 +643,7 @@ function createDeepSpace() {
     fog: false
   }));
   nebulaGroup.add(nebula);
-  registerDeepObject(orionData, nebulaGroup, 26, 30);
+  registerDeepObject(orionData, nebulaGroup, 36, 30);
 
   const cometData = DEEPSPACE.find(d => d.id === "comet");
   const cometGroup = new THREE.Group();
@@ -701,6 +706,7 @@ function openInfo(data) {
     { value: data.moons, label: "Bekannte Monde" },
     { value: data.radius.toFixed(2), label: "3D-Radius" }
   ];
+  const source = data.source || "https://science.nasa.gov/solar-system/";
 
   document.getElementById("planetStats").innerHTML = stats
     .map(stat => `<div class="stat"><strong>${stat.value}</strong><span>${stat.label}</span></div>`)
@@ -708,7 +714,8 @@ function openInfo(data) {
 
   document.getElementById("planetFacts").innerHTML = data.facts
     .map(fact => `<li>${fact}</li>`)
-    .join("");
+    .join("") +
+    `<li class="source-link">Quelle: <a href="${source}" target="_blank" rel="noopener">NASA Science</a></li>`;
 
   panel.classList.remove("hidden");
 }
