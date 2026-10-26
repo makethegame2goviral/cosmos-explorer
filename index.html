@@ -3,46 +3,57 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Cosmos Explorer | Entdecke das Universum</title>
+  <title>Cosmos Explorer 3D | Entdecke das Universum</title>
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <canvas id="stars"></canvas>
+  <div id="app">
+    <canvas id="scene"></canvas>
 
-  <header class="hero">
-    <p class="badge">Interactive Space Experience</p>
-    <h1>Cosmos <span>Explorer</span></h1>
-    <p class="subtitle">
-      Klicke auf einen Planeten und entdecke das Sonnensystem.
-    </p>
-    <a class="cta" href="#solar-system">Mission starten</a>
-  </header>
+    <header class="ui-top">
+      <div class="brand">
+        <span class="logo"></span>
+        Cosmos <strong>Explorer</strong>
+      </div>
+      <nav>
+        <a href="#" data-focus="sun">Sonne</a>
+        <a href="#" data-focus="earth">Erde</a>
+        <a href="#" data-focus="mars">Mars</a>
+        <a href="#" data-focus="jupiter">Jupiter</a>
+      </nav>
+    </header>
 
-  <main>
-    <section id="solar-system" class="solar-section">
-      <h2>Das Sonnensystem</h2>
-      <p class="section-text">Wähle einen Planeten aus, um mehr zu erfahren.</p>
-      <div class="orbit-system" id="orbitSystem"></div>
-    </section>
+    <div class="hint">Ziehen zum Drehen · Scrollen zum Zoomen · Planet anklicken</div>
 
-    <section id="planet-panel" class="planet-panel hidden">
-      <button id="closePanel" class="close-btn">✕</button>
-      <div class="planet-preview" id="planetPreview"></div>
-      <h2 id="planetName"></h2>
+    <aside id="planetPanel" class="planet-panel hidden">
+      <button id="closePanel" aria-label="Schließen">✕</button>
+      <div class="planet-head">
+        <div id="planetPreview"></div>
+        <div>
+          <p class="planet-type" id="planetType"></p>
+          <h2 id="planetName"></h2>
+        </div>
+      </div>
       <p id="planetDescription"></p>
       <div class="stats" id="planetStats"></div>
-      <div class="facts">
-        <h3>Coole Fakten</h3>
-        <ul id="planetFacts"></ul>
-      </div>
-    </section>
-  </main>
+      <h3>Missions-Log</h3>
+      <ul id="planetFacts"></ul>
+    </aside>
 
-  <footer>
-    <p>Cosmos Explorer · Built for explorers 🚀</p>
-  </footer>
+    <div id="loader" class="loader">
+      <div class="loader-ring"></div>
+      <p>Initialisiere Sonnensystem…</p>
+    </div>
+  </div>
 
-  <script src="data/planets.js"></script>
-  <script src="app.js"></script>
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+      "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+    }
+  }
+  </script>
+  <script type="module" src="app.js"></script>
 </body>
 </html>
