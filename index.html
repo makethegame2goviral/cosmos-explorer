@@ -24,7 +24,15 @@
       </nav>
     </header>
 
-    <div class="hint">Ziehen zum Drehen · Scrollen zum Zoomen · Planet anklicken · Mond & Sonden beobachten</div>
+    <div class="hud">
+      <div class="score-box">
+        <span>Punkte</span>
+        <strong id="score">0</strong>
+      </div>
+      <button id="quizButton">🚀 Weltraum-Quiz</button>
+    </div>
+
+    <div class="hint">Ziehen zum Drehen · Scrollen zum Zoomen · Planet anklicken · Missionen verfolgen</div>
 
     <aside id="planetPanel" class="planet-panel hidden">
       <button id="closePanel" aria-label="Schließen">✕</button>
@@ -40,6 +48,20 @@
       <h3>Missions-Log</h3>
       <ul id="planetFacts"></ul>
     </aside>
+
+    <div id="quizOverlay" class="quiz-overlay hidden">
+      <div class="quiz-card">
+        <button id="closeQuiz">✕</button>
+        <p class="quiz-label">Weltraum-Quiz</p>
+        <h2 id="quizQuestion"></h2>
+        <div id="quizAnswers"></div>
+        <p id="quizFeedback"></p>
+        <div class="quiz-progress">
+          <span id="quizProgress"></span>
+          <span id="quizScore">0 Punkte</span>
+        </div>
+      </div>
+    </div>
 
     <div id="loader" class="loader">
       <div class="loader-ring"></div>

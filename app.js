@@ -1,37 +1,34 @@
 import * as THREE from "three";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
-import { PLANETS } from "./data/planets.js";
+import { PLANETS, QUIZ } from "./data/planets.js";
 
 const canvas = document.getElementById("scene");
 const panel = document.getElementById("planetPanel");
 const loader = document.getElementById("loader");
+const quizOverlay = document.getElementById("quizOverlay");
+const scoreElement = document.getElementById("score");
 
 const scene = new THREE.Scene();
-scene.fog = new THREE.FogExp2(0x01020a, 0.0045);
+scene.fog = new THREE.FogExp2(0x01020a, 0.004);
 
-const camera = new THREE.PerspectiveCamera(
-  55,
-  window.innerWidth / window.innerHeight,
-  0.1,
-  1200
-);
-camera.position.set(0, 32, 66);
+const camera = new THREE.PerspectiveCamera(55, window.innerWidth / window.innerHeight, 0.1, 1400);
+camera.position.set(0, 34, 70);
 
 const renderer = new THREE.WebGLRenderer({ canvas, antialias: true });
 renderer.setSize(window.innerWidth, window.innerHeight);
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 renderer.toneMapping = THREE.ACESFilmicToneMapping;
-renderer.toneMappingExposure = 1.05;
+renderer.toneMappingExposure = 1.08;
 
 const controls = new OrbitControls(camera, renderer.domElement);
 controls.enableDamping = true;
-controls.dampingFactor = 0.045;
-controls.minDistance = 6;
-controls.maxDistance = 200;
+controls.dampingFactor = 0.04;
+controls.minDistance = 5;
+controls.maxDistance = 220;
 
-scene.add(new THREE.AmbientLight(0xffffff, 0.2));
+scene.add(new THREE.AmbientLight(0xffffff, 0.18));
 
-const sunLight = new THREE.PointLight(0xffd9a0, 1500, 500, 2);
+const sunLight = new THREE.PointLight(0xffd9a0, 1800, 600, 2);
 scene.add(sunLight);
 
 const sun = new THREE.Mesh(
@@ -41,41 +38,31 @@ const sun = new THREE.Mesh(
 scene.add(sun);
 
 const sunGlow = new THREE.Mesh(
-  new THREE.SphereGeometry(6.4, 128, 128),
-  new THREE.MeshBasicMaterial({
-    color: 0xffa726,
-    transparent: true,
-    opacity: 0.17,
-    blending: THREE.AdditiveBlending
-  })
+  new THREE.SphereGeometry(6.6, 128, 128),
+  new THREE.MeshBasicMaterial({ color: 0xffa726, transparent: true, opacity: 0.17, blending: THREE.AdditiveBlending })
 );
 scene.add(sunGlow);
 
 const sunHalo = new THREE.Mesh(
-  new THREE.SphereGeometry(10, 128, 128),
-  new THREE.MeshBasicMaterial({
-    color: 0xff8a00,
-    transparent: true,
-    opacity: 0.06,
-    blending: THREE.AdditiveBlending
-  })
+  new THREE.SphereGeometry(11, 128, 128),
+  new THREE.MeshBasicMaterial({ color: 0xff8a00, transparent: true, opacity: 0.06, blending: THREE.AdditiveBlending })
 );
 scene.add(sunHalo);
 
 function createStarfield() {
-  const count = 12000;
+  const count = 14000;
   const positions = new Float32Array(count * 3);
   const colors = new Float32Array(count * 3);
 
   for (let i = 0; i < count; i++) {
-    positions[i * 3] = (Math.random() - 0.5) * 900;
-    positions[i * 3 + 1] = (Math.random() - 0.5) * 900;
-    positions[i * 3 + 2] = (Math.random() - 0.5) * 900;
+    positions[i * 3] = (Math.random() - 0.5) * 1000;
+    positions[i * 3 + 1] = (Math.random() - 0.5) * 1000;
+    positions[i * 3 + 2] = (Math.random() - 0.5) * 1000;
 
-    const tint = 0.7 + Math.random() * 0.3;
+    const tint = 0.68 + Math.random() * 0.32;
     colors[i * 3] = tint;
     colors[i * 3 + 1] = tint;
-    colors[i * 3 + 2] = Math.min(1, tint + Math.random() * 0.25);
+    colors[i * 3 + 2] = Math.min(1, tint + Math.random() * 0.3);
   }
 
   const geometry = new THREE.BufferGeometry();
@@ -84,14 +71,14 @@ function createStarfield() {
 
   scene.add(new THREE.Points(geometry, new THREE.PointsMaterial({
     vertexColors: true,
-    size: 0.65,
+    size: 0.62,
     sizeAttenuation: true,
     transparent: true,
-    opacity: 0.9
+    opacity: 0.92
   })));
 }
 
-function noiseTexture(baseColor, style) {
+function makeTexture(baseColor, style) {
   const size = 1024;
   const c = document.createElement("canvas");
   c.width = size;
@@ -102,58 +89,53 @@ function noiseTexture(baseColor, style) {
 
   const gradient = ctx.createLinearGradient(0, 0, size, size);
   gradient.addColorStop(0, `rgb(${rgb})`);
-  gradient.addColorStop(1, `rgba(${rgb},0.75)`);
+  gradient.addColorStop(1, `rgba(${rgb},0.7)`);
   ctx.fillStyle = gradient;
   ctx.fillRect(0, 0, size, size);
 
   if (style === "earth") {
-    ctx.fillStyle = "#1c6b3a";
-    for (let i = 0; i < 34; i++) {
+    ctx.fillStyle = "#1a6b38";
+    for (let i = 0; i < 42; i++) {
       ctx.beginPath();
-      const x = Math.random() * size;
-      const y = Math.random() * size;
-      ctx.ellipse(x, y, 30 + Math.random() * 90, 18 + Math.random() * 55, Math.random() * Math.PI, 0, Math.PI * 2);
+      ctx.ellipse(Math.random() * size, Math.random() * size, 25 + Math.random() * 105, 15 + Math.random() * 60, Math.random() * Math.PI, 0, Math.PI * 2);
       ctx.fill();
     }
-    ctx.fillStyle = "rgba(255,255,255,0.22)";
-    for (let i = 0; i < 70; i++) {
+    ctx.fillStyle = "rgba(255,255,255,0.25)";
+    for (let i = 0; i < 100; i++) {
       ctx.beginPath();
-      ctx.ellipse(Math.random() * size, Math.random() * size, 20 + Math.random() * 90, 8 + Math.random() * 22, 0, 0, Math.PI * 2);
+      ctx.ellipse(Math.random() * size, Math.random() * size, 20 + Math.random() * 100, 7 + Math.random() * 24, 0, 0, Math.PI * 2);
       ctx.fill();
     }
   }
 
   if (style === "gas") {
     for (let y = 0; y < size; y += 3) {
-      const wave = Math.sin(y * 0.03) * 18;
-      ctx.fillStyle = `rgba(255,255,255,${0.03 + Math.random() * 0.07})`;
+      const wave = Math.sin(y * 0.028) * 22;
+      ctx.fillStyle = `rgba(255,255,255,${0.03 + Math.random() * 0.08})`;
       ctx.fillRect(0, y + wave, size, 2);
-      ctx.fillStyle = `rgba(0,0,0,${Math.random() * 0.08})`;
+      ctx.fillStyle = `rgba(0,0,0,${Math.random() * 0.09})`;
       ctx.fillRect(0, y + wave + 1, size, 1);
     }
-    ctx.fillStyle = "rgba(180,60,30,0.45)";
+    ctx.fillStyle = "rgba(190,65,30,0.5)";
     ctx.beginPath();
-    ctx.ellipse(size * 0.68, size * 0.62, 68, 34, 0, 0, Math.PI * 2);
+    ctx.ellipse(size * 0.66, size * 0.63, 75, 36, 0, 0, Math.PI * 2);
     ctx.fill();
   }
 
   if (style === "rock") {
-    for (let i = 0; i < 2600; i++) {
-      const x = Math.random() * size;
-      const y = Math.random() * size;
-      const r = Math.random() * 16 + 1;
+    for (let i = 0; i < 3200; i++) {
       ctx.beginPath();
-      ctx.arc(x, y, r, 0, Math.PI * 2);
-      ctx.fillStyle = `rgba(${Math.random() > 0.5 ? "255,255,255" : "0,0,0"},${Math.random() * 0.16})`;
+      ctx.arc(Math.random() * size, Math.random() * size, Math.random() * 17 + 1, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(${Math.random() > 0.5 ? "255,255,255" : "0,0,0"},${Math.random() * 0.17})`;
       ctx.fill();
     }
   }
 
   if (style === "ice") {
-    for (let i = 0; i < 1800; i++) {
+    for (let i = 0; i < 2200; i++) {
       ctx.beginPath();
-      ctx.arc(Math.random() * size, Math.random() * size, Math.random() * 24 + 2, 0, Math.PI * 2);
-      ctx.fillStyle = `rgba(255,255,255,${Math.random() * 0.18})`;
+      ctx.arc(Math.random() * size, Math.random() * size, Math.random() * 26 + 2, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(255,255,255,${Math.random() * 0.2})`;
       ctx.fill();
     }
   }
@@ -171,21 +153,22 @@ function textureStyle(planet) {
   return "rock";
 }
 
-function createOrbit(radius) {
+function createOrbit(radius, color = 0x4a5f8f, opacity = 0.3) {
   const points = [];
-  for (let i = 0; i <= 220; i++) {
-    const angle = (i / 220) * Math.PI * 2;
+  for (let i = 0; i <= 240; i++) {
+    const angle = (i / 240) * Math.PI * 2;
     points.push(new THREE.Vector3(Math.cos(angle) * radius, 0, Math.sin(angle) * radius));
   }
 
   scene.add(new THREE.Line(
     new THREE.BufferGeometry().setFromPoints(points),
-    new THREE.LineBasicMaterial({ color: 0x4a5f8f, transparent: true, opacity: 0.3 })
+    new THREE.LineBasicMaterial({ color, transparent: true, opacity })
   ));
 }
 
 const planetMeshes = [];
 const planetObjects = [];
+const moons = [];
 let earthMesh = null;
 
 function createPlanets() {
@@ -193,10 +176,10 @@ function createPlanets() {
     createOrbit(data.orbitRadius);
 
     const mesh = new THREE.Mesh(
-      new THREE.SphereGeometry(data.radius, 96, 96),
+      new THREE.SphereGeometry(data.radius, 112, 112),
       new THREE.MeshStandardMaterial({
-        map: noiseTexture(data.color, textureStyle(data)),
-        roughness: 0.76,
+        map: makeTexture(data.color, textureStyle(data)),
+        roughness: 0.74,
         metalness: 0.06
       })
     );
@@ -209,13 +192,8 @@ function createPlanets() {
 
     if (data.id === "saturn") {
       const ring = new THREE.Mesh(
-        new THREE.RingGeometry(data.radius * 1.35, data.radius * 2.45, 160),
-        new THREE.MeshBasicMaterial({
-          color: 0xd9c08a,
-          side: THREE.DoubleSide,
-          transparent: true,
-          opacity: 0.48
-        })
+        new THREE.RingGeometry(data.radius * 1.35, data.radius * 2.5, 180),
+        new THREE.MeshBasicMaterial({ color: 0xd9c08a, side: THREE.DoubleSide, transparent: true, opacity: 0.46 })
       );
       ring.rotation.x = Math.PI / 2.2;
       mesh.add(ring);
@@ -223,56 +201,79 @@ function createPlanets() {
   });
 }
 
-let moon = null;
-
-function createMoon() {
-  if (!earthMesh) return;
-
-  moon = new THREE.Mesh(
-    new THREE.SphereGeometry(0.24, 48, 48),
-    new THREE.MeshStandardMaterial({
-      map: noiseTexture(0xc9c5bd, "rock"),
-      roughness: 0.95
-    })
+function createMoon(parent, color, distance, size, speed, tilt = 0) {
+  const moon = new THREE.Mesh(
+    new THREE.SphereGeometry(size, 48, 48),
+    new THREE.MeshStandardMaterial({ map: makeTexture(color, "rock"), roughness: 0.95 })
   );
   scene.add(moon);
+  moons.push({ moon, parent, distance, angle: Math.random() * Math.PI * 2, speed, tilt });
 }
 
-function createProbe(name, color, startRadius, speed, tilt) {
+function createMoons() {
+  createMoon(earthMesh, 0xc9c5bd, 2.1, 0.24, 0.55);
+
+  const mars = planetObjects.find(p => p.data.id === "mars").mesh;
+  createMoon(mars, 0x9a8a7d, 1.5, 0.09, 1.1, 0.15);
+  createMoon(mars, 0x8b7d70, 2.1, 0.07, 0.8, -0.2);
+
+  const jupiter = planetObjects.find(p => p.data.id === "jupiter").mesh;
+  createMoon(jupiter, 0xd8c9a5, 3.2, 0.18, 0.45, 0.1);
+  createMoon(jupiter, 0xb9c7d6, 4.1, 0.15, 0.32, -0.15);
+  createMoon(jupiter, 0xc9b18a, 5, 0.13, 0.25, 0.2);
+  createMoon(jupiter, 0x9f8f78, 5.9, 0.12, 0.2, -0.1);
+
+  const saturn = planetObjects.find(p => p.data.id === "saturn").mesh;
+  createMoon(saturn, 0xd9c9a5, 3.6, 0.2, 0.35, 0.12);
+  createMoon(saturn, 0xb8c4d1, 4.6, 0.14, 0.28, -0.18);
+}
+
+function createProbe(name, color, radius, speed, tilt) {
   const group = new THREE.Group();
 
   const body = new THREE.Mesh(
-    new THREE.BoxGeometry(0.22, 0.14, 0.34),
-    new THREE.MeshStandardMaterial({ color, metalness: 0.7, roughness: 0.3 })
+    new THREE.BoxGeometry(0.24, 0.15, 0.36),
+    new THREE.MeshStandardMaterial({ color, metalness: 0.75, roughness: 0.28 })
   );
   group.add(body);
 
   const dish = new THREE.Mesh(
-    new THREE.ConeGeometry(0.16, 0.1, 24),
-    new THREE.MeshStandardMaterial({ color: 0xdddddd, metalness: 0.5, roughness: 0.4 })
+    new THREE.ConeGeometry(0.17, 0.11, 28),
+    new THREE.MeshStandardMaterial({ color: 0xe6e6e6, metalness: 0.5, roughness: 0.35 })
   );
-  dish.position.y = 0.16;
+  dish.position.y = 0.17;
   dish.rotation.x = Math.PI;
   group.add(dish);
 
-  const trail = new THREE.Mesh(
-    new THREE.SphereGeometry(0.05, 16, 16),
-    new THREE.MeshBasicMaterial({ color, transparent: true, opacity: 0.7 })
-  );
-  group.add(trail);
-
   scene.add(group);
-  return { name, group, radius: startRadius, angle: Math.random() * Math.PI * 2, speed, tilt };
+
+  const routePoints = [];
+  for (let i = 0; i <= 260; i++) {
+    const angle = (i / 260) * Math.PI * 2;
+    routePoints.push(new THREE.Vector3(
+      Math.cos(angle) * radius,
+      Math.sin(angle * 0.6) * tilt * 8,
+      Math.sin(angle) * radius
+    ));
+  }
+
+  const route = new THREE.Line(
+    new THREE.BufferGeometry().setFromPoints(routePoints),
+    new THREE.LineBasicMaterial({ color, transparent: true, opacity: 0.45 })
+  );
+  scene.add(route);
+
+  return { name, group, radius, angle: Math.random() * Math.PI * 2, speed, tilt };
 }
 
 const probes = [
-  createProbe("Voyager 1", 0xbfd4ff, 27, 0.018, 0.18),
-  createProbe("Voyager 2", 0xffd2a1, 36, 0.013, -0.12)
+  createProbe("Voyager 1", 0xbfd4ff, 28, 0.016, 0.2),
+  createProbe("Voyager 2", 0xffd2a1, 38, 0.011, -0.14)
 ];
 
 function createAsteroidBelt() {
-  const count = 1600;
-  const geometry = new THREE.IcosahedronGeometry(0.11, 0);
+  const count = 1800;
+  const geometry = new THREE.IcosahedronGeometry(0.1, 0);
   const material = new THREE.MeshStandardMaterial({ color: 0x8a8175, roughness: 0.95 });
   const instanced = new THREE.InstancedMesh(geometry, material, count);
   const matrix = new THREE.Matrix4();
@@ -362,6 +363,82 @@ document.getElementById("closePanel").addEventListener("click", () => {
   panel.classList.add("hidden");
 });
 
+let score = 0;
+let questionIndex = 0;
+
+function startQuiz() {
+  questionIndex = 0;
+  score = 0;
+  scoreElement.textContent = score;
+  quizOverlay.classList.remove("hidden");
+  showQuestion();
+}
+
+function showQuestion() {
+  const question = QUIZ[questionIndex];
+  document.getElementById("quizQuestion").textContent = question.question;
+  document.getElementById("quizProgress").textContent = `Frage ${questionIndex + 1} / ${QUIZ.length}`;
+  document.getElementById("quizScore").textContent = `${score} Punkte`;
+  document.getElementById("quizFeedback").textContent = "";
+
+  const answers = document.getElementById("quizAnswers");
+  answers.innerHTML = "";
+
+  question.answers.forEach((answer, index) => {
+    const button = document.createElement("button");
+    button.className = "answer";
+    button.textContent = answer;
+    button.addEventListener("click", () => checkAnswer(index, button));
+    answers.appendChild(button);
+  });
+}
+
+function checkAnswer(index, button) {
+  const question = QUIZ[questionIndex];
+  const buttons = [...document.querySelectorAll(".answer")];
+  buttons.forEach(item => item.disabled = true);
+
+  if (index === question.correct) {
+    button.classList.add("correct");
+    score += 10;
+    document.getElementById("quizFeedback").textContent = "Richtig! +10 Punkte 🚀";
+  } else {
+    button.classList.add("wrong");
+    buttons[question.correct].classList.add("correct");
+    document.getElementById("quizFeedback").textContent = "Leider falsch. Die richtige Antwort ist markiert.";
+  }
+
+  scoreElement.textContent = score;
+  document.getElementById("quizScore").textContent = `${score} Punkte`;
+
+  setTimeout(() => {
+    questionIndex++;
+
+    if (questionIndex < QUIZ.length) {
+      showQuestion();
+    } else {
+      finishQuiz();
+    }
+  }, 1300);
+}
+
+function finishQuiz() {
+  const badge = score >= 90 ? "🌌 Galaxie-Genie" : score >= 60 ? "🪐 Planeten-Entdecker" : "🌟 Sternen-Schüler";
+
+  document.getElementById("quizQuestion").textContent = "Mission abgeschlossen!";
+  document.getElementById("quizAnswers").innerHTML = `
+    <div class="badge">${badge}</div>
+    <p style="color:var(--muted);margin-top:16px">Du hast ${score} von ${QUIZ.length * 10} Punkten erreicht.</p>
+  `;
+  document.getElementById("quizFeedback").textContent = "Klicke auf „Weltraum-Quiz“, um es erneut zu starten.";
+  document.getElementById("quizProgress").textContent = "Fertig";
+}
+
+document.getElementById("quizButton").addEventListener("click", startQuiz);
+document.getElementById("closeQuiz").addEventListener("click", () => {
+  quizOverlay.classList.add("hidden");
+});
+
 function animate() {
   requestAnimationFrame(animate);
 
@@ -383,15 +460,15 @@ function animate() {
     item.mesh.scale.setScalar(THREE.MathUtils.lerp(item.mesh.scale.x, highlight, 0.1));
   });
 
-  if (earthMesh && moon) {
-    const moonAngle = time * 0.55;
-    moon.position.set(
-      earthMesh.position.x + Math.cos(moonAngle) * 2.1,
-      earthMesh.position.y + Math.sin(moonAngle * 0.4) * 0.15,
-      earthMesh.position.z + Math.sin(moonAngle) * 2.1
+  moons.forEach(item => {
+    item.angle += item.speed * 0.01;
+    item.moon.position.set(
+      item.parent.position.x + Math.cos(item.angle) * item.distance,
+      item.parent.position.y + Math.sin(item.angle * 0.5) * item.tilt,
+      item.parent.position.z + Math.sin(item.angle) * item.distance
     );
-    moon.rotation.y += 0.006;
-  }
+    item.moon.rotation.y += 0.006;
+  });
 
   probes.forEach(probe => {
     probe.angle += probe.speed;
@@ -400,7 +477,6 @@ function animate() {
       Math.sin(probe.angle * 0.6) * probe.tilt * 8,
       Math.sin(probe.angle) * probe.radius
     );
-    probe.group.rotation.y += 0.01;
     probe.group.lookAt(sun.position);
   });
 
@@ -428,7 +504,7 @@ window.addEventListener("resize", onResize);
 
 createStarfield();
 createPlanets();
-createMoon();
+createMoons();
 animate();
 
 setTimeout(() => loader.classList.add("done"), 700);

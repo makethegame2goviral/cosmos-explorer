@@ -1,20 +1,19 @@
 # 🌌 Cosmos Explorer 3D
 
-Cosmos Explorer ist eine interaktive 3D-Weltraum-Website. Du kannst durch ein animiertes Sonnensystem navigieren, Planeten anklicken und Fakten zu jedem Planeten entdecken.
+Cosmos Explorer ist eine interaktive 3D-Weltraum-Website. Du kannst durch ein animiertes Sonnensystem navigieren, Planeten anklicken, Missionen verfolgen und ein Weltraum-Quiz spielen.
 
 ## Features
 
 - Echtes 3D-Sonnensystem mit Three.js
 - Frei drehbare Kamera und Zoom
 - Acht klickbare Planeten mit Detail-Panel
-- Deutlich verbesserte, prozedurale Planeten-Texturen
-- Erdmond, der separat um die Erde kreist
-- Zwei bewegliche Raumsonden: Voyager 1 und Voyager 2
-- Asteroidengürtel mit 1.600 animierten Asteroiden
+- Verbesserte prozedurale Planeten-Texturen
+- Erdmond sowie Monde um Mars, Jupiter und Saturn
+- Voyager-1- und Voyager-2-Raumsonden mit sichtbaren Missionsrouten
+- Asteroidengürtel mit 1.800 animierten Asteroiden
+- Weltraum-Quiz mit 10 Fragen, Punkten und Abzeichen
 - Verbesserte Sonne mit Glow- und Halo-Effekt
-- Sternenhimmel mit 12.000 farbigen Sternen
-- Orbit-Linien, rotierende Planeten und Saturnringe
-- Schnellnavigation zu Sonne, Erde, Mars, Jupiter und Saturn
+- Sternenhimmel mit 14.000 farbigen Sternen
 - Responsives Interface für Desktop und Mobile
 
 ## Technologien
@@ -29,8 +28,6 @@ Cosmos Explorer ist eine interaktive 3D-Weltraum-Website. Du kannst durch ein an
 
 ## Starten
 
-Du kannst `index.html` direkt öffnen oder das Projekt über einen lokalen Server starten:
-
 ```bash
 npx serve .
 ```
@@ -40,7 +37,6 @@ Danach öffne die angezeigte Adresse im Browser.
 ## Roadmap
 
 - [ ] Echte NASA-Texturen für alle Planeten
-- [ ] Weitere Monde und Raumsonden
-- [ ] Weltraum-Quiz und Entdeckungs-Abzeichen
-- [ ] Nutzerkonten und Favoriten
+- [ ] Nutzerkonten und gespeicherte Highscores
 - [ ] Exoplaneten-Modus
+- [ ] Schwarzes Loch und Galaxien-Modus

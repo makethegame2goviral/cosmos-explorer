@@ -144,3 +144,56 @@ export const PLANETS = [
     ]
   }
 ];
+
+export const QUIZ = [
+  {
+    question: "Welcher Planet ist der größte im Sonnensystem?",
+    answers: ["Jupiter", "Saturn", "Neptun", "Erde"],
+    correct: 0
+  },
+  {
+    question: "Wie viele Monde hat die Erde?",
+    answers: ["1", "2", "4", "8"],
+    correct: 0
+  },
+  {
+    question: "Welcher Planet ist als Roter Planet bekannt?",
+    answers: ["Venus", "Mars", "Merkur", "Uranus"],
+    correct: 1
+  },
+  {
+    question: "Was umkreist die Erde?",
+    answers: ["Die Sonne", "Der Mond", "Mars", "Jupiter"],
+    correct: 0
+  },
+  {
+    question: "Welcher Planet hat die bekanntesten Ringe?",
+    answers: ["Jupiter", "Saturn", "Mars", "Venus"],
+    correct: 1
+  },
+  {
+    question: "Welcher Planet liegt der Sonne am nächsten?",
+    answers: ["Venus", "Erde", "Merkur", "Mars"],
+    correct: 2
+  },
+  {
+    question: "Welcher Planet ist der heißeste?",
+    answers: ["Merkur", "Venus", "Mars", "Jupiter"],
+    correct: 1
+  },
+  {
+    question: "Wie heißt unser Stern?",
+    answers: ["Sirius", "Polaris", "Sonne", "Vega"],
+    correct: 2
+  },
+  {
+    question: "Welcher Planet rotiert fast auf der Seite?",
+    answers: ["Uranus", "Neptun", "Saturn", "Merkur"],
+    correct: 0
+  },
+  {
+    question: "Welche Raumsonde hat als erste interstellaren Raum erreicht?",
+    answers: ["Voyager 1", "Apollo 11", "Hubble", "Curiosity"],
+    correct: 0
+  }
+];
