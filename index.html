@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cosmos Explorer | Entdecke das Universum</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <canvas id="stars"></canvas>
+
+  <header class="hero">
+    <p class="badge">Interactive Space Experience</p>
+    <h1>Cosmos <span>Explorer</span></h1>
+    <p class="subtitle">
+      Klicke auf einen Planeten und entdecke das Sonnensystem.
+    </p>
+    <a class="cta" href="#solar-system">Mission starten</a>
+  </header>
+
+  <main>
+    <section id="solar-system" class="solar-section">
+      <h2>Das Sonnensystem</h2>
+      <p class="section-text">Wähle einen Planeten aus, um mehr zu erfahren.</p>
+      <div class="orbit-system" id="orbitSystem"></div>
+    </section>
+
+    <section id="planet-panel" class="planet-panel hidden">
+      <button id="closePanel" class="close-btn">✕</button>
+      <div class="planet-preview" id="planetPreview"></div>
+      <h2 id="planetName"></h2>
+      <p id="planetDescription"></p>
+      <div class="stats" id="planetStats"></div>
+      <div class="facts">
+        <h3>Coole Fakten</h3>
+        <ul id="planetFacts"></ul>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>Cosmos Explorer · Built for explorers 🚀</p>
+  </footer>
+
+  <script src="data/planets.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
